@@ -1,0 +1,126 @@
+1-
+Create Database E_Commerce;
+
+2-
+Create Table Customers
+(
+    CustomerID Int Primary Key ,
+    Name Varchar(20),
+    PhoneNumber Varchar(10)
+);
+
+
+Create Table Orders
+(
+    OrderID Int Primary Key ,
+    CustomerID Int , 
+    FOREIGN Key(CustomerID) REFERENCES customers (CustomerID)
+);
+
+
+Create Table Products
+(
+    ProductID Int Primary Key ,
+    ProductName Varchar(10) , 
+    ProductPrice Int,
+    OrderID Int , 
+    FOREIGN Key(OrderID) REFERENCES Orders (OrderID)
+);
+
+
+CREATE Table Categories 
+( 
+    CategoryID Int PRIMARY Key, 
+    CategoryName Varchar(20)
+);
+
+CREATE Table Payments 
+( 
+    PaymentID Int PRIMARY Key, 
+    PaymentDate Int, 
+    PaymentAmount Int, 
+    PaymentMethod Int,
+    CustomerID Int,
+    FOREIGN Key(CustomerID) REFERENCES customers (CustomerID)
+
+);
+
+CREATE Table OrderItems 
+( 
+    OrderItemsID Int PRIMARY Key, 
+    OrderPrice Int,
+    OrderName Varchar(10),
+    OrderID int,
+    FOREIGN Key(OrderID) REFERENCES orders (orderID)
+
+);
+
+
+3-
+
+Done In ERD.
+
+
+4-
+Insert Into customers(customers.CustomerID, customers.Name, customers.PhoneNumber)
+Values (1,'Mohammed','30302');
+
+Insert Into orders(orders.OrderID)
+Values (11);
+
+Insert Into payments(payments.PaymentID,payments.PaymentMethod)
+Values (1,'Visa-Card');
+
+
+Update customers 
+Set customers.Name='Ahmad'
+Where customers.CustomerID=1;
+
+DELETE FROM customers
+WHERE CustomerID = 1;
+
+
+5-
+SELECT * FROM customers;
+SELECT * FROM Orders;
+
+
+SELECT 
+    o.OrderID,
+    c.CustomerID,
+    c.Name
+FROM orders o
+JOIN customers c
+    ON o.CustomerID = c.CustomerID;
+
+SELECT *
+FROM productslimi
+WHERE ProductPrice > 100;
+
+SELECT *
+FROM products
+WHERE ProductPrice > 50
+ORDER BY ProductPrice DESC
+LIMIT 5;
+
+
+6-
+SELECT SUM(ProductPrice) AS TotalPrice FROM products;
+SELECT AVG(ProductPrice) AS AveragePrice FROM products;
+SELECT COUNT(ProductID) AS TotalProducts FROM products;
+
+Use Case: E-Commerce Database System
+Actors:
+1- Customer/User – Registers, browses products, places orders, and makes payments.
+2- Admin – Manages products, categories, orders, and payments.
+3- System – Handles database operations like storing, updating, and retrieving data.
+
+
+7-
+select * From customers INNER JOIN orders
+on customers.CustomerID=orders.OrderID;
+
+select * From customers 
+left join orders
+On customers.CustomerID=orders.CustomerID;
+
